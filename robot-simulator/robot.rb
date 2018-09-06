@@ -1,6 +1,6 @@
 # to test in irb:
 # irb
-# load './robot-simulator.rb'
+# load './robot.rb'
 
 class Robot
   def initialize
@@ -9,7 +9,30 @@ class Robot
   end
 
   def place(x, y, direction)
-    @position = [x.to_i,y.to_i]
+    x = x.to_i
+    y = y.to_i
+
+    if x < 0
+      x = 0
+      puts "Oops! you cannot place the robot outside the 5x5 dimension, set the x to the minimum dimension"
+    end
+
+    if x > 5
+      x = 5
+      puts "Oops! you cannot place the robot outside the 5x5 dimension, set the x to the maximum dimension"
+    end
+
+    if y < 0
+      y = 0
+      puts "Oops! you cannot place the robot outside the 5x5 dimension, set the y to the minimum dimension"
+    end
+
+    if y > 5
+      y = 5
+      puts "Oops! you cannot place the robot outside the 5x5 dimension, set the y to the maximum dimension"
+    end
+
+    @position = [x,y]
     @direction = case direction.downcase
       when "north" then :north
       when "south" then :south

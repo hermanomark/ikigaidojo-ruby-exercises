@@ -1,3 +1,6 @@
+#To run robot simulator:
+# ruby simulator.rb
+
 require './robot'
 
 @robot = Robot.new
@@ -27,15 +30,12 @@ def right
 end
 
 puts "Place the robot: "
-while (place, x, y, direction = gets.chomp.split) do
-  # case instruction.downcase
-  #   when 'place' then puts place 
-  #     break
-  #   when 'quit' then break
-  #   else puts "Please place the robot first!"
-  # end
-  checkPlace = place.downcase
-  if (checkPlace == 'place' && x != nil && y != nil && direction != nil)
+while (instruction, x, y, direction = gets.chomp.split) do
+  if instruction == nil then instruction = "placeholder" else instruction end
+  if direction == nil then direction = "placeholder" else direction end
+  info = [instruction.downcase, x, y, direction.downcase]
+  
+  if info[0] == "place" && info[1] != nil && info[2] != nil && (info[3] == "north" || info[3] == "south" || info[3] == "east" || info[3] == "west")
     puts place(x, y, direction) 
       break
   else 
@@ -51,15 +51,27 @@ puts "\n
       2. Move \n
       3. Left \n
       4. Right \n
-      5. Quit \n "
+      5. Place \n
+      6. Quit \n "
 
-while instruction = gets.chomp do
-  case instruction.downcase
-    when "report" then puts report
-    when "move" then puts move
-    when "left" then puts left
-    when "right" then puts right
-    when "quit" then break
-    else puts "Please choose from the menu!"
-  end
+while (instruction, x, y, direction = gets.chomp.split) do
+  if instruction == nil then instruction = "placeholder" else instruction end
+  if direction == nil then direction = "placeholder" else direction end
+  info = [instruction.downcase, x, y, direction.downcase]
+
+  if info[0] == "report" && info[1] == nil && info[2] == nil && info[3] == "placeholder"
+    puts report
+  elsif info[0] == "move" && info[1] == nil && info[2] == nil && info[3] == "placeholder"
+    puts move
+  elsif info[0] == "left" && info[1] == nil && info[2] == nil && info[3] == "placeholder"
+    puts left
+  elsif info[0] == "right" && info[1] == nil && info[2] == nil && info[3] == "placeholder"
+    puts right
+  elsif info[0] == "place" && info[1] != nil && info[2] != nil && (info[3] == "north" || info[3] == "south" || info[3] == "east" || info[3] == "west")
+    puts place(x, y, direction)
+  elsif info[0] == "quit" && info[1] == nil && info[2] == nil && info[3] == "placeholder"
+    break
+  else
+    puts "Please choose from the menu!"
+  end 
 end
